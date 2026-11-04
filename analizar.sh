@@ -16,7 +16,8 @@ if [ $# -lt 1 ] || [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
 fi
 CLIP="$1"; shift
 if [ ! -f "$CLIP" ]; then
-  echo "No encuentro el vídeo: $CLIP" >&2
+  echo "ERROR: no encuentro el vídeo: $CLIP" >&2
+  echo "Indica la ruta del vídeo, por ejemplo: bash analizar.sh ~/Videos/mi_partido.mp4" >&2
   exit 1
 fi
 CLIP="$(cd "$(dirname "$CLIP")" && pwd)/$(basename "$CLIP")"
@@ -26,8 +27,6 @@ SALIDA="$REPO/salidas/$NOMBRE"
 if [ $# -ge 1 ] && [ "${1#-}" = "$1" ]; then
   SALIDA="$1"; shift
 fi
-mkdir -p "$SALIDA"
-SALIDA="$(cd "$SALIDA" && pwd)"
 
 # Intérprete: YOLOFUTBOL_PYTHON, si no el .venv de instalar.sh, si no python3 (p. ej. en Colab).
 PY="${YOLOFUTBOL_PYTHON:-}"
@@ -36,17 +35,29 @@ if [ -z "$PY" ]; then
   if [ -x "$REPO/.venv/bin/python" ]; then PY="$REPO/.venv/bin/python"; else PY=python3; fi
 fi
 
+# Comprobaciones antes de crear nada: entorno con las librerías y modelos descargados.
+if ! "$PY" -c "import torch, ultralytics, supervision, sports, scipy" >/dev/null 2>&1; then
+  echo "ERROR: falta el entorno de yolofutbol o está incompleto ($PY no tiene las librerías necesarias)." >&2
+  echo "Ejecuta primero:  bash instalar.sh        (con tarjeta NVIDIA: bash instalar.sh --gpu)" >&2
+  exit 1
+fi
+FALTAN=0
 for m in football-player-detection.pt football-ball-detection.pt football-pitch-detection.pt; do
-  if [ ! -s "$REPO/data/$m" ]; then
-    echo "Falta el modelo data/$m. Ejecuta antes: bash descargar_modelos.sh" >&2
-    exit 1
-  fi
+  if [ ! -s "$REPO/data/$m" ]; then echo "ERROR: falta el modelo data/$m" >&2; FALTAN=1; fi
 done
+if [ "$FALTAN" = 1 ]; then
+  echo "Ejecuta primero:  bash descargar_modelos.sh" >&2
+  exit 1
+fi
 
 DEVICE="${YOLOFUTBOL_DEVICE:-$("$PY" -c 'import torch; print(0 if torch.cuda.is_available() else "cpu")')}"
 if [ "$DEVICE" = "cpu" ]; then
   echo "Sin tarjeta gráfica: el análisis irá por el procesador y tardará al menos 10 veces más."
 fi
+
+mkdir -p "$SALIDA"
+SALIDA="$(cd "$SALIDA" && pwd)"
+echo "Analizando $CLIP -> $SALIDA"
 
 cd "$REPO"
 "$PY" -m yolofutbol run \
@@ -91,12 +102,16 @@ if share:
     print(f"Reparto de la posesión asignada: azul {num(share.get('team0'))} %, naranja {num(share.get('team1'))} %.")
 print(f"Rivales presionando, media con posesión: {num(summary.get('pressure_index_mean'), 2)}"
       f" (máximo {summary.get('pressure_index_max', '—')}).")
-if len(peaks):
-    marcas = [num(r.t_s) + (" (al final del clip)" if int(getattr(r, "edge", 0) or 0) else "")
-              for r in peaks.itertuples(index=False)]
-    print("Momentos de presión máxima (s): " + "; ".join(marcas))
+print("  (referencia: en los 24 clips del artículo la media va de 0,03 a 0,65 rivales, con mediana 0,29)")
+edge = peaks["edge"].fillna(0).astype(int).astype(bool) if len(peaks) and "edge" in peaks else pd.Series(False, index=peaks.index)
+dentro, borde = peaks[~edge], peaks[edge]
+if len(dentro):
+    print("Momentos de presión máxima, para ir a verlos (s): " + "; ".join(num(t) for t in dentro["t_s"]))
 else:
-    print("No se han detectado momentos de presión máxima.")
+    print("No se han detectado momentos de presión máxima dentro del clip.")
+if len(borde):
+    print("  En el borde del clip (pueden deberse solo al corte del vídeo): "
+          + "; ".join(num(t) for t in borde["t_s"]) + " s")
 print()
 print(f"Posesiones: {len(seq)}")
 for i, r in enumerate(seq.itertuples(index=False), start=1):

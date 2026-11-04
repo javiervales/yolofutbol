@@ -7,8 +7,10 @@ YOLOFUTBOL analiza un clip de fútbol grabado con una sola cámara en plano gene
 ## Qué necesitas
 
 - **Un vídeo de plano general** (cámara de retransmisión o de grada que vea buena parte del campo), en mp4 y a ser posible a 1080p. Clips de unos segundos a pocos minutos.
-- **Opcional, una tarjeta gráfica NVIDIA.** Sin ella funciona, pero tarda al menos 10 veces más; para clips largos conviene Colab con GPU. Con una tarjeta de gama media, un clip de 30 s a 1080p se analiza en unos 4 minutos, vídeo anotado incluido.
-- Nada más si usas Google Colab (opción 1). Para tu propio ordenador (opción 2), Python 3.10, 3.11 o 3.12 en Linux o macOS (en Windows, mediante WSL).
+- **Opcional, una tarjeta gráfica NVIDIA** con un controlador reciente (compatible con CUDA 12.4; `nvidia-smi` debe funcionar). Sin ella funciona, pero tarda al menos 10 veces más; para clips largos conviene Colab con GPU. Con una tarjeta de gama media, un clip de 30 s a 1080p se analiza en unos 4 minutos, vídeo anotado incluido.
+- **Según dónde lo uses:**
+  - En Google Colab (opción 1): nada.
+  - En tu ordenador (opción 2): Linux o macOS (en Windows, mediante WSL), conexión a internet y Python 3.10, 3.11 o 3.12. En Ubuntu/Debian conviene tener además el paquete `python3-venv` (`sudo apt install python3-venv`); si no lo tienes ni puedes instalarlo, `instalar.sh` se las arregla descargando `pip` por su cuenta.
 
 ## Tres formas de usarlo
 
@@ -18,31 +20,54 @@ Pulsa el botón **Open in Colab** de arriba. Se abre un cuaderno en el navegador
 
 ### 2. En tu ordenador, con dos órdenes
 
-Descarga el repositorio y, en una terminal dentro de su carpeta:
+Descarga el repositorio (`git clone https://github.com/javiervales/yolofutbol.git`, o el botón *Code → Download ZIP* de GitHub) y, en una terminal dentro de su carpeta:
 
 ```bash
 bash instalar.sh                      # con tarjeta NVIDIA: bash instalar.sh --gpu
-bash analizar.sh mi_partido.mp4
+bash analizar.sh ~/Videos/mi_partido.mp4
 ```
 
-`instalar.sh` crea un entorno de Python en `.venv/`, instala lo necesario y descarga los tres modelos de detección a `data/` (con `--clip-ejemplo` descarga también un clip de prueba, `data/0bfacc_0.mp4`). Solo hay que ejecutarlo una vez.
+`instalar.sh` crea un entorno de Python en `.venv/` dentro de la carpeta (no toca el resto del sistema), instala lo necesario y descarga los tres modelos de detección a `data/`. Solo hay que ejecutarlo una vez, y si algo falla se puede repetir sin más.
 
-`analizar.sh` analiza el clip con los parámetros del artículo, deja los resultados en `salidas/mi_partido/` y escribe al final un resumen de las posesiones:
+**El vídeo puede estar donde quieras**: a `analizar.sh` se le da su ruta, absoluta (`~/Videos/mi_partido.mp4`) o relativa a la carpeta del repositorio (`../mi_partido.mp4`). No hace falta copiarlo dentro.
+
+**Para comprobar que todo funciona** antes de usar un vídeo propio, instala con el clip de ejemplo y analiza sus 5 primeros segundos (menos de un minuto con GPU):
+
+```bash
+bash instalar.sh --gpu --clip-ejemplo
+bash analizar.sh data/0bfacc_0.mp4 --duration-s 5
+```
+
+`analizar.sh` analiza el clip con los parámetros del artículo, deja los resultados en `salidas/<nombre_del_vídeo>/` y escribe al final un resumen de las posesiones. Este es el resumen real de un clip de 30 s de la Bundesliga (uno de los de Kaggle usados en el artículo):
 
 ```
-RESUMEN · 0bfacc_0.mp4 · 30,0 s
-Balón detectado en el 95,1 % de los fotogramas.
+RESUMEN · test16.mp4 · 30,0 s
+Balón detectado en el 70,0 % de los fotogramas.
 Reparto de la posesión asignada: azul 100,0 %, naranja 0,0 %.
-Rivales presionando, media con posesión: 0,27 (máximo 3).
-Momentos de presión máxima (s): 5,9; 15,8; 22,5; 26,6; 30,0 (al final del clip)
+Rivales presionando, media con posesión: 0,26 (máximo 2).
+  (referencia: en los 24 clips del artículo la media va de 0,03 a 0,65 rivales, con mediana 0,29)
+Momentos de presión máxima, para ir a verlos (s): 4,2; 12,7; 15,8
 
-Posesiones: 1
-   1. equipo 0 (azul), de 0,1 a 30,0 s (29,9 s); primer presionante a los 0,2 s; presionantes medios 0,27 (máx. 3); termina: sigue en juego al terminar el clip.
+Posesiones: 2
+   1. equipo 0 (azul), de 1,3 a 8,4 s (7,2 s); primer presionante a los 2,7 s; presionantes medios 0,07 (máx. 2); termina: se pierde el balón de vista (pase largo, balón fuera de plano o no detectado).
+   2. equipo 0 (azul), de 10,6 a 20,2 s (9,6 s); primer presionante a los 1,1 s; presionantes medios 0,40 (máx. 2); termina: se pierde el balón de vista (pase largo, balón fuera de plano o no detectado).
 ```
 
-(Salida real con el clip de ejemplo, en el que un mismo equipo conserva el balón los 30 s.)
+Los equipos se numeran 0 (azul) y 1 (naranja) según el color con que aparecen en el vídeo anotado; cuál es cada uno se ve en `annotated.mp4`. Para leer los «presionantes medios»: en los 24 clips del artículo, la media de un clip completo va de 0,03 a 0,65 rivales, con mediana 0,29. Un pico en el último instante del clip se lista aparte, porque puede deberse solo al corte del vídeo.
 
 Se puede indicar otra carpeta de salida como segundo argumento (`bash analizar.sh mi_partido.mp4 resultados/partido1`) y añadir al final cualquier opción de la orden avanzada; por ejemplo, `--duration-s 10` analiza solo los 10 primeros segundos y `--no-video` no genera el vídeo anotado.
+
+### Si algo falla
+
+| Mensaje | Qué pasa y qué hacer |
+|---|---|
+| `ensurepip is not available` o `apt install python3.10-venv` | Falta el paquete `python3-venv` de Ubuntu/Debian. `instalar.sh` ya lo resuelve solo descargando `pip`; si aun así falla, instálalo (`sudo apt install python3-venv`) o, sin permisos de administrador, instala `uv` (`pipx install uv`) y repite `bash instalar.sh`. |
+| `No module named pip` o un `.venv/` que quedó a medias | Viene de un intento de instalación anterior. Basta con repetir `bash instalar.sh`: detecta el entorno incompleto, lo borra y lo crea de nuevo. |
+| `Falta gdown` o `falta el modelo data/...` | No se han descargado los modelos. Ejecuta `bash instalar.sh` (si no lo has hecho) o `bash descargar_modelos.sh`, que usa el entorno `.venv/`. |
+| `falta el entorno de yolofutbol` | `analizar.sh` no encuentra las librerías: ejecuta antes `bash instalar.sh`. |
+| `PyTorch no ve la tarjeta gráfica` | El controlador NVIDIA no está instalado o es antiguo. Funciona igual, pero por el procesador y mucho más despacio. |
+
+Si no hay forma de instalarlo en tu equipo, usa el cuaderno de Colab (opción 1).
 
 ### 3. Uso avanzado
 
@@ -62,7 +87,7 @@ python -m yolofutbol run --video mi_partido.mp4 --out salidas/mi_partido \
     --h-ema 0.3 --closing-min-mps 0.5 --dist-presion-core-m 2.5 --carry-max-s 0 --radar-pos right
 ```
 
-(`--device cpu` si no hay tarjeta gráfica). El modo `baseline` reproduce el sistema original del trabajo fin de grado, en píxeles y sin seguimiento.
+(`--device cpu` si no hay tarjeta gráfica). Solo se escriben las opciones cuyo valor en el artículo difiere del que trae el programa por defecto; el resto (radio de presión de 5 m, posesión a 2 m, etc.) son los valores de serie, listados en la tabla siguiente. El modo `baseline` reproduce el sistema original del trabajo fin de grado, en píxeles y sin seguimiento.
 
 ## Qué obtienes y cómo leerlo
 
@@ -98,22 +123,29 @@ Un rival cuenta como **presionante** si está a 5 m o menos del balón y, ademá
 
 ## Parámetros del artículo y cómo cambiarlos
 
-| Qué | Valor | Opción |
-|---|---|---|
-| Distancia para tener el balón | 2 m | `--dist-posesion-m` |
-| Tiempo cerca del balón para ganar la posesión | 0,4 s | `--control-s` |
-| Radio de presión | 5 m | `--dist-presion-m` |
-| Cerca: presiona siempre a esta distancia | 2,5 m | `--dist-presion-core-m` |
-| Velocidad mínima de acercamiento | 0,5 m/s | `--closing-min-mps` |
-| Ventana para medir el acercamiento | 0,5 s | `--closing-window-s` |
-| Media móvil de la curva | 25 fotogramas | `--smooth-window` |
-| Altura mínima de un pico sobre su entorno | 0,5 presionantes | `--peak-prominence` |
-| Separación mínima entre picos | 1 s | `--peak-min-sep-s` |
-| Suavizado de la proyección al campo | 0,3 | `--h-ema` |
-| Arrastre del balón al perderlo | desactivado | `--carry-max-s 0` |
-| Huecos de balón que se rellenan | 15 fotogramas | `--ball-gap-max` |
+Parámetros que cambian la lectura táctica:
 
-Para cambiar uno, añádelo al final: `bash analizar.sh mi_partido.mp4 salidas/radio6 --dist-presion-m 6`. Los parámetros de posesión y presión también se cambian sin volver a procesar el vídeo, en segundos, con `replay` (abajo).
+| Qué | Valor | Opción | Efecto práctico |
+|---|---|---|---|
+| Distancia para tener el balón | 2 m | `--dist-posesion-m` | Un jugador cuenta como poseedor si está a esta distancia del balón o menos. |
+| Tiempo para ganar la posesión | 0,4 s | `--control-s` | El equipo gana la posesión cuando uno de sus jugadores se queda este tiempo junto al balón; evita contar balones que solo pasan cerca. |
+| Radio de presión | 5 m | `--dist-presion-m` | Solo los rivales a esta distancia del balón o menos pueden contar como presionantes. Subirlo hace la curva más alta y menos selectiva. |
+| Cerca: presiona siempre | 2,5 m | `--dist-presion-core-m` | Un rival a esta distancia o menos cuenta como presionante aunque esté quieto. |
+| Velocidad mínima de acercamiento | 0,5 m/s | `--closing-min-mps` | Entre 2,5 y 5 m, el rival cuenta solo si se acerca al balón al menos a esta velocidad; así no cuenta quien solo acompaña. 0 lo desactiva. |
+| Media móvil de la curva | 25 fotogramas | `--smooth-window` | Cuántos fotogramas se promedian para dibujar la línea de la curva (1 s a 25 fps). Más, curva más suave y con menos picos. |
+| Altura mínima de un pico | 0,5 presionantes | `--peak-prominence` | Cuánto tiene que sobresalir la curva respecto a su entorno para marcar un momento de presión máxima. Más, menos picos. |
+| Separación mínima entre picos | 1 s | `--peak-min-sep-s` | Dos picos más cercanos que esto se cuentan como uno. |
+
+Parámetros técnicos, que normalmente no hace falta tocar:
+
+| Qué | Valor | Opción | Efecto práctico |
+|---|---|---|---|
+| Suavizado de la proyección al campo | 0,3 | `--h-ema` | Suaviza el temblor de la vista cenital y de las distancias en metros cuando la cámara se mueve: 1 = sin suavizar; valores menores, posiciones más estables pero que tardan más en seguir un movimiento brusco de cámara. |
+| Huecos del balón que se rellenan | 15 fotogramas | `--ball-gap-max` | Cuántos fotogramas seguidos sin balón detectado se rellenan en línea recta (0,6 s a 25 fps); si el balón falta más tiempo, se da por perdido y se cierra la posesión. |
+| Balón portado | desactivado (0 s) | `--carry-max-s` | Cuando el detector pierde el balón, cuántos segundos se supone que sigue en los pies de quien lo llevaba. Desactivado en el artículo porque en el ajuste no mejoró la detección de picos. |
+| Ventana del acercamiento | 0,5 s | `--closing-window-s` | Intervalo sobre el que se mide si un rival se acerca al balón. |
+
+Para cambiar uno, añádelo al final: `bash analizar.sh mi_partido.mp4 salidas/radio6 --dist-presion-m 6`. Los parámetros de posesión y presión también se cambian sin volver a procesar el vídeo, en segundos, con `replay` (ver «Reproducir el ajuste del artículo»).
 
 ## Límites conocidos
 
@@ -198,7 +230,7 @@ Código bajo licencia MIT (ver `LICENSE`). Los modelos de detección y los clips
 YOLOFUTBOL turns a single-camera, wide-angle football clip into a **pressing index**: the number of opponents pressing the team in possession at each instant, with the peak moments flagged so the coach knows where to look. Outputs: `pressure.png` (pressing curve), `annotated.mp4` (teams, ball carrier, pressers and a top-down radar view) and `sequences.csv` (one row per team possession: time to first presser, mean and maximum pressers, how it ended).
 
 - **No install:** click *Open in Colab* above and run the cells in order (select a GPU runtime).
-- **Local:** `bash instalar.sh` (`--gpu` for NVIDIA/CUDA 12.4), then `bash analizar.sh my_clip.mp4`; results go to `salidas/my_clip/`. Runs on CPU too, at least 10 times slower.
+- **Local:** `bash instalar.sh` (`--gpu` for NVIDIA/CUDA 12.4), then `bash analizar.sh path/to/my_clip.mp4`; results go to `salidas/my_clip/`. On Ubuntu/Debian without `python3-venv`, the installer bootstraps pip itself; re-running it repairs a half-created `.venv/`. Runs on CPU too, at least 10 times slower.
 - **Advanced / reproducing the paper:** `python -m yolofutbol --help`; subcommands `run`, `replay`, `tune`, `evaluate`, `sheets`, `storyboard`. Reference labels are in `etiquetas/`, parameter grids in `codigo_articulo/`.
 
 Requires Python 3.10–3.12, `supervision>=0.26,<0.31` and the public roboflow/sports models (downloaded by `descargar_modelos.sh`). MIT licence. Please cite the paper above (under review) and the original bachelor's thesis.
