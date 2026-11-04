@@ -53,7 +53,13 @@ Posesiones: 2
    2. equipo 0 (azul), de 10,6 a 20,2 s (9,6 s); primer presionante a los 1,1 s; presionantes medios 0,40 (máx. 2); termina: se pierde el balón de vista (pase largo, balón fuera de plano o no detectado).
 ```
 
-Los equipos se numeran 0 (azul) y 1 (naranja) según el color con que aparecen en el vídeo anotado; cuál es cada uno se ve en `annotated.mp4`. Para leer los «presionantes medios»: en los 24 clips del artículo, la media de un clip completo va de 0,03 a 0,65 rivales, con mediana 0,29. Un pico en el último instante del clip se lista aparte, porque puede deberse solo al corte del vídeo.
+Cómo leer el resumen:
+
+- **Equipos.** Se numeran 0 (azul) y 1 (naranja), los colores de sus recuadros en el vídeo anotado. El resumen da una pista del color de camiseta de cada uno, calculada del color medio del torso (por ejemplo, «azul = camiseta blanca o clara, naranja = camiseta roja»); si los dos colores no se distinguen, lo dice y hay que mirarlo en `annotated.mp4`.
+- **Presionantes medios.** En los 24 clips del artículo, la media de un clip completo va de 0,03 a 0,65 rivales, con mediana 0,29.
+- **«Ya con un rival encima al recibir».** El primer presionante llega en 0,1 s o menos: el rival ya estaba dentro del radio cuando el equipo ganó el balón.
+- **Picos en el borde de una posesión.** Se listan aparte los momentos de presión máxima que caen en el primer o el último instante de una posesión, es decir, al recibir o justo antes de perder el balón (o al empezar o acabar el clip). Pueden ser reales, pero también deberse solo al cambio de posesión o al corte del vídeo: conviene comprobarlos en el vídeo con más cautela.
+- **Un pico de la curva no es un fotograma.** El pico es de la media móvil de 1 s; en el fotograma exacto del pico la cabecera del vídeo puede marcar menos presionantes.
 
 Se puede indicar otra carpeta de salida como segundo argumento (`bash analizar.sh mi_partido.mp4 resultados/partido1`) y añadir al final cualquier opción de la orden avanzada; por ejemplo, `--duration-s 10` analiza solo los 10 primeros segundos y `--no-video` no genera el vídeo anotado.
 
@@ -95,8 +101,8 @@ En `salidas/<nombre_del_clip>/`:
 
 | Fichero | Qué es |
 |---|---|
-| `pressure.png` | **La curva de presión.** Eje horizontal, tiempo; vertical, rivales presionando. Puntos grises: el recuento en cada fotograma. Línea de color: su media móvil (1 s a 25 fotogramas/s), que es la que se lee. Triángulos con el instante: momentos de presión máxima, los que conviene ir a ver. Donde no hay línea, el sistema no ha podido asignar la posesión a ningún equipo (balón no visto, disputa), y no significa que no haya presión. |
-| `annotated.mp4` | **El vídeo anotado.** Recuadros azules y naranjas para los dos equipos, recuadro grueso para el poseedor, triángulo rojo sobre cada rival que presiona y círculo verde en el balón detectado. Abajo a la derecha, una vista cenital del campo con los jugadores y un círculo de 5 m alrededor del balón. Sirve para comprobar si lo que dice la curva es cierto. |
+| `pressure.png` | **La curva de presión.** Eje horizontal, tiempo; vertical, rivales presionando. Puntos grises: el recuento en cada fotograma. Línea de color: su media móvil (1 s a 25 fotogramas/s), que es la que se lee. Línea discontinua: la media acumulada desde el inicio del clip, que sirve de nivel de referencia. Triángulos con el instante: momentos de presión máxima, los que conviene ir a ver. Donde no hay línea, el sistema no ha podido asignar la posesión a ningún equipo (balón no visto, disputa), y no significa que no haya presión. |
+| `annotated.mp4` | **El vídeo anotado.** Recuadros azules y naranjas para los dos equipos (`arb`, el árbitro), recuadro grueso y rótulo POSEEDOR para quien lleva el balón, triángulo rosa sobre cada rival que presiona y círculo en el balón (verde si se ha detectado, naranja si su posición se ha rellenado). Una vista cenital semitransparente del campo muestra los jugadores y un círculo de 5 m alrededor del balón; va abajo a la derecha, y con `--radar-pos center` abajo en el centro. Arriba, una cabecera con el estado de cada fotograma, por ejemplo `f 648 · t 21,6 s · balón: detectado · posesión: equipo azul, controlada · presionando: 2 · proyección: ok` (f = número de fotograma; balón: detectado, interpolado —rellenado entre dos detecciones— o perdido; posesión: controlada si un jugador lleva el balón, en vuelo si viaja entre compañeros, sin asignar si no se sabe; proyección: ok si se ha podido pasar la imagen a metros en ese fotograma, la anterior si se reutiliza la del último fotograma válido). Sirve para comprobar si lo que dice la curva es cierto. |
 | `sequences.csv` | **La tabla de posesiones**, una fila por posesión de un equipo (columnas abajo). Se abre con Excel o LibreOffice. |
 | `peaks.csv` | Los momentos de presión máxima: instante (`t_s`) y valor de la media móvil en ese instante. |
 | `frames.csv` | Una fila por fotograma: tiempo, posición y estado del balón, equipo con la posesión, poseedor, rivales presionando (`n_pressers`) y distancia del rival más cercano. Para quien quiera hacer sus propios cálculos. |
@@ -116,7 +122,7 @@ Columnas de `sequences.csv`, en lenguaje de banquillo:
 | `time_to_first_presser_s` | Segundos desde que el equipo gana el balón hasta que llega el primer rival a presionar. Vacío si nadie presiona. Mide la reacción del rival. |
 | `mean_pressers` | Rivales presionando, de media, durante la posesión. Es la intensidad de la presión sufrida. |
 | `max_pressers` | El mayor número de rivales presionando a la vez. |
-| `mean_nearest_presser_dist_m` | Distancia media, en metros, del rival más cercano al balón. |
+| `mean_nearest_presser_dist_m` | Distancia media, en metros, del rival más cercano al balón, esté o no presionando; por eso puede superar el radio de presión de 5 m. |
 | `end_reason` | Cómo termina: `lost_to_opponent` (la recupera el rival), `ball_lost` (el sistema deja de ver el balón: pase largo, fuera de plano o no detectado) o `clip_end` (sigue al terminar el clip). |
 
 Un rival cuenta como **presionante** si está a 5 m o menos del balón y, además, está a 2,5 m o menos o se acerca a 0,5 m/s o más. Así no cuenta quien solo acompaña de lejos.
@@ -145,7 +151,18 @@ Parámetros técnicos, que normalmente no hace falta tocar:
 | Balón portado | desactivado (0 s) | `--carry-max-s` | Cuando el detector pierde el balón, cuántos segundos se supone que sigue en los pies de quien lo llevaba. Desactivado en el artículo porque en el ajuste no mejoró la detección de picos. |
 | Ventana del acercamiento | 0,5 s | `--closing-window-s` | Intervalo sobre el que se mide si un rival se acerca al balón. |
 
-Para cambiar uno, añádelo al final: `bash analizar.sh mi_partido.mp4 salidas/radio6 --dist-presion-m 6`. Los parámetros de posesión y presión también se cambian sin volver a procesar el vídeo, en segundos, con `replay` (ver «Reproducir el ajuste del artículo»).
+Para cambiar uno, añádelo al final: `bash analizar.sh mi_partido.mp4 salidas/radio6 --dist-presion-m 6`. Eso vuelve a procesar todo el vídeo. Los parámetros de las dos tablas (salvo `--h-ema` y `--ball-gap-max`, que afectan a la detección) se pueden cambiar en segundos, sin volver a procesarlo, a partir de un análisis ya hecho:
+
+```bash
+source .venv/bin/activate
+python -m yolofutbol replay --from salidas/mi_partido --out salidas/mi_partido_radio6 --dist-presion-m 6
+```
+
+`replay` rehace la curva, los picos y las tablas (no el vídeo anotado) en la carpeta nueva.
+
+La vista cenital del vídeo anotado se coloca abajo a la derecha (`--radar-pos right`, la de serie en `analizar.sh`) o abajo en el centro (`--radar-pos center`): `bash analizar.sh mi_partido.mp4 --radar-pos center`.
+
+Durante el análisis solo aparecen mensajes de progreso del programa; los avisos internos de las librerías (como el `FutureWarning` de ByteTrack que mostraban versiones anteriores) están silenciados.
 
 ## Límites conocidos
 

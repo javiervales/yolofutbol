@@ -85,6 +85,19 @@ def num(x, d=1):
     return "—" if x is None or (isinstance(x, float) and math.isnan(x)) else f"{x:.{d}f}".replace(".", ",")
 
 EQUIPO = {0: "equipo 0 (azul)", 1: "equipo 1 (naranja)"}
+
+
+def color_camiseta(proto):
+    """Nombre aproximado del color de camiseta a partir del prototipo (S·cos H, S·sin H, V) del k-means."""
+    a, b, v = proto
+    sat = math.hypot(a, b)
+    if sat < 0.2:  # poco color: lo decide el brillo
+        return "blanca o clara" if v >= 0.65 else ("negra u oscura" if v < 0.35 else "gris")
+    hue = math.degrees(math.atan2(b, a)) % 360  # H de OpenCV (0-180) pasado a grados
+    for limite, nombre in ((20, "roja"), (45, "naranja"), (70, "amarilla"), (160, "verde"), (200, "celeste"),
+                           (260, "azul"), (300, "morada"), (340, "rosa o granate"), (360, "roja")):
+        if hue < limite:
+            return nombre + (" oscura" if v < 0.4 else "")
 FINAL = {
     "lost_to_opponent": "la recupera el rival",
     "ball_lost": "se pierde el balón de vista (pase largo, balón fuera de plano o no detectado)",
@@ -97,6 +110,14 @@ print("=" * 72)
 print(f"RESUMEN · {Path(summary['video']).name} · {num(dur_clip)} s")
 print("=" * 72)
 print(f"Balón detectado en el {num(summary.get('ball_detected_pct'))} % de los fotogramas.")
+protos = (summary.get("team_classifier") or {}).get("centers_scosh_ssinh_v")
+colores = [color_camiseta(p) for p in protos] if protos and len(protos) == 2 else []
+if len(colores) == 2 and colores[0] != colores[1]:
+    print(f"Equipos (pista por el color medio del torso): azul = camiseta {colores[0]}, "
+          f"naranja = camiseta {colores[1]}. Compruébalo en annotated.mp4.")
+else:
+    print("Equipos: azul y naranja son los dos equipos detectados, en el orden en que aparecen; "
+          "mira annotated.mp4 para saber cuál es cada uno.")
 share = summary.get("possession_share_pct", {})
 if share:
     print(f"Reparto de la posesión asignada: azul {num(share.get('team0'))} %, naranja {num(share.get('team1'))} %.")
@@ -110,14 +131,20 @@ if len(dentro):
 else:
     print("No se han detectado momentos de presión máxima dentro del clip.")
 if len(borde):
-    print("  En el borde del clip (pueden deberse solo al corte del vídeo): "
+    print("  En el borde de una posesión (primer o último instante: al recibir o justo antes de perder el balón;\n"
+          "  pueden deberse al cambio de posesión o al corte del vídeo, conviene verlos con más cautela): "
           + "; ".join(num(t) for t in borde["t_s"]) + " s")
 print()
 print(f"Posesiones: {len(seq)}")
 for i, r in enumerate(seq.itertuples(index=False), start=1):
     fin = r.start_t_s + r.duration_s
     first = getattr(r, "time_to_first_presser_s", float("nan"))
-    primero = "ningún rival llega a presionar" if math.isnan(first) else f"primer presionante a los {num(first)} s"
+    if math.isnan(first):
+        primero = "ningún rival llega a presionar"
+    elif first <= 0.1:
+        primero = "ya con un rival encima al recibir"
+    else:
+        primero = f"primer presionante a los {num(first)} s"
     print(f"  {i:2d}. {EQUIPO.get(r.team, r.team)}, de {num(r.start_t_s)} a {num(fin)} s ({num(r.duration_s)} s); "
           f"{primero}; presionantes medios {num(r.mean_pressers, 2)} (máx. {r.max_pressers}); "
           f"termina: {FINAL.get(getattr(r, 'end_reason', ''), getattr(r, 'end_reason', '—'))}.")

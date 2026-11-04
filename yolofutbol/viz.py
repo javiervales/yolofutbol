@@ -1,6 +1,7 @@
 """Gráficas del índice de presión y anotación del vídeo (cajas, poseedor, presionantes, radar)."""
 
 import math
+from functools import lru_cache
 from pathlib import Path
 from typing import Optional
 
@@ -12,6 +13,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 from matplotlib.gridspec import GridSpec  # noqa: E402
 from matplotlib.ticker import FuncFormatter, MaxNLocator  # noqa: E402
 import numpy as np  # noqa: E402
+from PIL import Image, ImageDraw, ImageFont  # noqa: E402
 import pandas as pd  # noqa: E402
 import supervision as sv  # noqa: E402
 from sports.annotators.soccer import draw_pitch, draw_points_on_pitch  # noqa: E402
@@ -20,7 +22,7 @@ from yolofutbol import io as yio  # noqa: E402
 from yolofutbol.pitch import CONFIG  # noqa: E402
 from yolofutbol.pressure import FramePressure, pressure_series  # noqa: E402
 from yolofutbol.teams import REFEREE, UNKNOWN  # noqa: E402
-from yolofutbol.track_ball import DETECTED  # noqa: E402
+from yolofutbol.track_ball import DETECTED, INTERPOLATED  # noqa: E402
 
 # Paleta (hex): equipo 0 azul, equipo 1 naranja, desconocido gris, árbitro amarillo, presión rojo.
 HEX = {0: "#2a78d6", 1: "#eb6834", UNKNOWN: "#9a9994", REFEREE: "#eda100"}
@@ -162,15 +164,40 @@ def annotate_frame(frame: np.ndarray, rec, fp: FramePressure, ring_px: Optional[
         if ring_px is not None:
             for r in ring_px:
                 cv2.circle(img, (bx, by), int(r), (255, 255, 255), 1)
+    return _draw_header(img, header_text(rec, fp))
+
+
+TEAM_NAME = {0: "azul", 1: "naranja"}
+BALL_TXT = {DETECTED: "detectado", INTERPOLATED: "interpolado"}
+POSSESSION_TXT = {"controlled": "controlada", "in_flight": "en vuelo"}
+
+
+def header_text(rec, fp: FramePressure) -> str:
+    """Cabecera del vídeo anotado en castellano llano."""
     if fp.team_possession is None:
-        pos_txt = "posesion -"
+        pos_txt = "sin asignar"
     else:
-        state_txt = {"controlled": "controlado", "in_flight": "en vuelo"}.get(fp.possession_state, "-")
-        pos_txt = f"posesion E{fp.team_possession} - {state_txt}"
-    status = (f"f {rec.frame}  t {rec.t_s:6.2f} s  balon {rec.ball_state}  {pos_txt}  "
-              f"presion {fp.n_pressers}  H {'ok' if rec.h_valid else ('reusada' if rec.h_reused else '-')}")
-    cv2.rectangle(img, (0, 0), (img.shape[1], 34), (0, 0, 0), -1)
-    cv2.putText(img, status, (10, 24), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255), 2)
+        team = TEAM_NAME.get(fp.team_possession, str(fp.team_possession))
+        pos_txt = f"equipo {team}, {POSSESSION_TXT.get(fp.possession_state, 'sin poseedor')}"
+    proj = "ok" if rec.h_valid else ("la anterior" if rec.h_reused else "no disponible")
+    t_txt = f"{rec.t_s:.1f}".replace(".", ",")
+    return (f"f {rec.frame} · t {t_txt} s · balón: {BALL_TXT.get(rec.ball_state, 'perdido')} · "
+            f"posesión: {pos_txt} · presionando: {fp.n_pressers} · proyección: {proj}")
+
+
+@lru_cache(maxsize=4)
+def _header_font(size: int) -> ImageFont.FreeTypeFont:
+    """DejaVu Sans (incluida en matplotlib), que admite tildes y eñes, a diferencia de las fuentes de OpenCV."""
+    return ImageFont.truetype(str(Path(matplotlib.get_data_path()) / "fonts" / "ttf" / "DejaVuSans.ttf"), size)
+
+
+def _draw_header(img: np.ndarray, text: str) -> np.ndarray:
+    """Franja negra superior con el texto en blanco, escalada a la altura del vídeo."""
+    size = max(12, round(24 * img.shape[0] / 1080))
+    band = int(size * 1.6)
+    strip = Image.new("RGB", (img.shape[1], band), (0, 0, 0))
+    ImageDraw.Draw(strip).text((10, (band - size) // 2 - 1), text, font=_header_font(size), fill=(255, 255, 255))
+    img[:band] = np.asarray(strip)[:, :, ::-1]
     return img
 
 

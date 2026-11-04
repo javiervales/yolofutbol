@@ -3,6 +3,7 @@
 import argparse
 import logging
 import platform
+import warnings
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional, Tuple
@@ -28,6 +29,11 @@ from yolofutbol.viz import (annotate_frame, contact_sheets, default_story_times,
                            render_radar)
 
 log = logging.getLogger("yolofutbol")
+
+# Avisos internos de las librerías (p. ej. sv.ByteTrack obsoleto desde supervision 0.28): no aportan nada
+# a quien usa el programa; la versión de supervision ya está acotada en requirements.txt.
+for _category in (FutureWarning, DeprecationWarning, UserWarning):
+    warnings.filterwarnings("ignore", category=_category)
 
 LOG_EVERY = 100
 TRACK_MIN_CONSECUTIVE = 3

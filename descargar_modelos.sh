@@ -46,7 +46,7 @@ descargar() {  # descargar NOMBRE ID_DE_GOOGLE_DRIVE
     return
   fi
   echo "Descargando data/$1 ..."
-  if ! "$PY" -m gdown "https://drive.google.com/uc?id=$2" -O "$destino.part"; then
+  if ! "$PY" -m gdown -q "https://drive.google.com/uc?id=$2" -O "$destino.part"; then
     rm -f "$destino.part"
     echo "ERROR: no se pudo descargar $1 (¿sin conexión o Google Drive limita las descargas? Prueba más tarde)." >&2
     exit 1
