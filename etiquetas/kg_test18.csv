@@ -1,0 +1,11 @@
+clip,t_s,n_pressers,confidence,note
+kg_test18,0.5,2,baja,"Amarillo (E0) conduce en el centro del campo entre dos blancos que le cierran; poco después (1,9 s) el balón pasa a E1"
+kg_test18,3.0,1,media,"Amarillo entra al cuerpo y se tira al suelo sobre el poseedor blanco (E1) junto al círculo central; E0 recupera hacia 4,3 s"
+kg_test18,6.0,2,media,"Presión sostenida 4,3-8,2 s sobre los amarillos que combinan en corto a la derecha del círculo central, con 1-2 blancos pegados; máxima hacia 5,3-6,2 s"
+kg_test18,21.0,1,baja,"Contraataque amarillo por la banda cercana: un blanco persigue y se pone a unos 2-3 m del conductor antes del cambio de orientación; puede ser solo acompañamiento"
+kg_test18,22.0,1,media,"El amarillo que recibe el cambio a la izquierda sufre la entrada en carrera de un blanco que se lanza al balón"
+kg_test18,25.0,1,media,"Extremo amarillo con balón cerca del área de E1 y un defensor blanco encima cerrándole (24,5-25,4 s y duelo similar hacia 26,4 s)"
+kg_test18,27.5,1,baja,"Nuevo poseedor amarillo junto al área con un blanco a unos 3 m; puede ser continuación del pico anterior"
+kg_test18,,,,"Fases: 0-1,5 s disputa sin dueño claro; 1,9-3,4 s posesión E1 (blancos); 4,3-30 s posesión E0 (amarillos) casi sin interrupción"
+kg_test18,,,,"Sin presión: 8,6-19,2 s, circulación amarilla en el centro y a la derecha con pases largos y receptores libres (blancos a más de 10 m)"
+kg_test18,,,,"28,3-30 s: balón en el área de E1 con muchos jugadores amontonados; no se distingue poseedor ni presión individual, sin etiquetar"

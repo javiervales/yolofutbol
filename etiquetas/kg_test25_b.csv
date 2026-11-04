@@ -1,0 +1,5 @@
+clip,t_s,n_pressers,confidence,note
+kg_test25,16.8,2,baja,"Rojo (E1) controla en banda derecha ofensiva y uno o dos oscuros se le echan encima; plano lejano y jugadores minúsculos, el nº 3 del detector es dudoso"
+kg_test25,22.0,1,media,"Rojo con balón junto al córner derecho; un defensor oscuro cierra a 2-4 m y acaba recuperando (posesión pasa a E0 hacia 22.6)"
+kg_test25,,,,"0-1.5 s saque o despeje del portero amarillo sin rival cerca; 1.5-15 s posesión rojo en campo propio con juego largo y lejano entre grupos, sin cierre sobre el poseedor"
+kg_test25,,,,"15.8-19.7 s rojo avanza por banda derecha y cambia de orientación en vuelo con rivales a más de 8 m; 22.6-29.8 s oscuros rechazan y juego aéreo/centros dentro del área sin poseedor claro (el 3 del detector a 25.0 es un centro en vuelo, no cuenta)"

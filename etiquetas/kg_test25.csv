@@ -1,0 +1,7 @@
+clip,t_s,n_pressers,confidence,note
+kg_test25,5.5,1,baja,"Tras el despeje largo del portero del equipo oscuro el balón cae en campo del Mainz (rojo); un jugador oscuro cierra al rojo que lo controla junto a la banda lejana (5.3-6.2 s); jugadores muy pequeños y sin poder ampliar"
+kg_test25,10.5,1,baja,"Segundo balón disputado en la banda lejana cerca del centro del campo (10.1-11.0 s) con un oscuro pegado al rojo; no se distingue si hay control ni orientación"
+kg_test25,17.0,2,media,"El Mainz conduce hacia el área rival por la derecha y dos defensores oscuros se le echan encima (16.8 s) antes de que suelte el balón en profundidad"
+kg_test25,22.0,1,media,"Un defensor oscuro cierra al extremo rojo que conduce hacia el banderín (20.6-22.1 s) y le roba o le quita el balón hacia las 22.6 s"
+kg_test25,,,,"Fases: 0-1.5 s portero oscuro con el balón sin nadie a menos de 20 m y saque largo; 2-11 s balón en campo propio del Mainz con disputas sueltas y posesión poco clara; 11.5-15.5 s balón en vuelo y circulación por la banda lejana sin presión visible; 15.8-22.5 s posesión del Mainz con ataque por la derecha; 23-30 s centros y rechaces en el área oscura con el balón casi siempre en el aire (la aglomeración de 25.0 s es un duelo aéreo y no cuenta)"
+kg_test25,,,,"Limitaciones: en las hojas el plano es general y los jugadores miden unos 20 px; la distancia de 5 m y la orientación se estiman a ojo y las posibles disputas a 2.5 s y 8.2 s no se han contado por falta de evidencia"

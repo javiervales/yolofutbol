@@ -1,0 +1,10 @@
+clip,t_s,n_pressers,confidence,note
+dfl_08fd33_0,13.5,1,media,"Blanco en la banda del fondo (lejana) a la altura del medio campo; un verde le cierra y se pega por detrás entre 12.5 y 14.4 s, hasta que el blanco la saca hacia dentro (balón en el aire a 14.9 s)"
+dfl_08fd33_0,16.5,1,baja,"Nuevo poseedor blanco en el carril del fondo cerca de la línea de medio campo, con un verde a unos 4-6 m; no está claro que cierre activamente; pase largo a 17.8 s"
+dfl_08fd33_0,19.5,1,media,"Pase blanco a la derecha (19.2 s); un verde sale a por el receptor y le cierra a ~4 m cuando controla (19.7 s); el blanco devuelve hacia dentro"
+dfl_08fd33_0,21.5,1,media,"Disputa en la zona central-baja: un verde cierra al blanco que intenta controlar y conducir (20.6-22.1 s); E1 roba y sale conduciendo por la banda de abajo (22.6 s)"
+dfl_08fd33_0,25.5,1,baja,"Posesión verde (E1): conductor verde por la banda cercana (abajo); un blanco le sale al cruce a unos 5 m (25.4-25.9 s), parte tapado por el recuadro cenital; el verde pasa hacia dentro a 26.4 s"
+dfl_08fd33_0,28.0,1,media,"Verde recibe y conduce en el círculo central (27.4-28.3 s) con un blanco pegado a 3-4 m que le encima; suelta el pase a 28.8 s"
+dfl_08fd33_0,,,,"Fases: 0-~22 s posesión blanca (E0, Gladbach) con salida lenta desde atrás y circulación en su campo; E1 (verde) en bloque medio sin presión alta. ~22.5 s pérdida blanca tras la disputa; 22.6-30 s posesión verde (E1) en transición por la banda cercana y luego circulación por el centro."
+dfl_08fd33_0,,,,"Tramos sin presión: 0-5.5 s (centrales y portero blancos sin rival a menos de ~10 m), 5.8-7.2 s (un mediocentro verde a ~5 m del receptor blanco, pero acompaña sin cerrar: no lo cuento), 7-12 s (circulación blanca por delante del bloque verde), 23-25 s (conducción verde por la banda sin blanco cercano). Posible inicio de otro cierre de un blanco sobre el poseedor verde a 29.8 s, cortado por el final del clip; no lo cuento."
+dfl_08fd33_0,,,,"Limitación: jugadores de pocos píxeles en las miniaturas y profundidad del plano (la banda del fondo comprime distancias), por eso las distancias son aproximadas; 16.5 y 25.5 s son dudosos."

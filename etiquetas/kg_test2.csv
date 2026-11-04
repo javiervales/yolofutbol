@@ -1,0 +1,10 @@
+clip,t_s,n_pressers,confidence,note
+kg_test2,1.0,2,media,Conducción amarilla (E1) en el medio con un blanco pegado al costado y un segundo a unos 4-5 m; el balón se le va largo a 1.4-1.9 s
+kg_test2,6.0,1,media,El lateral blanco sale a cerrar al extremo amarillo que conducía solo por la banda cercana a la cámara desde 2.4 s
+kg_test2,10.5,1,alta,Duelo continuo en banda entre 7.2 y 11.0 s con pases cortos; máxima proximidad en la entrada en plancha del blanco sobre el amarillo con balón
+kg_test2,13.5,1,media,Tras relajarse en 11.5-12.0 s otro amarillo recibe en banda y un blanco lo cierra a 2-3 m antes del centro-chut a 13.9 s
+kg_test2,19.0,2,alta,Contrapresión amarilla tras la recuperación blanca a 15.8 s: dos amarillos encima del conductor blanco desde 16.3 s hasta robarle a 19.2-19.7 s
+kg_test2,21.5,1,media,Tras recuperar Dortmund en el medio un blanco presiona al poseedor amarillo dentro de un grupo de jugadores; el balón queda tapado en parte del tramo
+kg_test2,24.0,2,baja,Amarillo con balón en la frontal con dos blancos a 1-3 m; puede ser continuación del pico de 21.5 s porque no se ve relajación clara
+kg_test2,,,,Fases: E1 (amarillo Dortmund) en posesión 0-15.8 s atacando la portería del fondo visible; balón en disputa 13.9-15.8 s (centro y rechace); E0 (blanco Stuttgart) 15.8-19.5 s; E1 19.7-25.9 s; balón suelto hacia la banda 26-28 s y saque blanco a 28.3 s
+kg_test2,,,,Sin presión: 2.4-5.3 s (extremo amarillo conduce solo con el blanco más cercano a 8 m o más); 14.4-15.4 s (balón en vuelo tras el centro); 26.4-30 s (balón suelto y fuera de juego)

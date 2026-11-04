@@ -1,0 +1,14 @@
+# torch se instala aparte con la rueda CUDA adecuada (p. ej. cu124):
+#   pip install torch --index-url https://download.pytorch.org/whl/cu124
+ultralytics>=8.3
+# sv.ByteTrack se eliminó en supervision 0.31.0; hay que quedarse por debajo.
+supervision>=0.26,<0.31
+opencv-python-headless
+numpy
+pandas
+matplotlib
+scikit-learn
+scipy
+# El paquete sports declara opencv-python, transformers y umap-learn como dependencias;
+# aquí solo se usan config del campo, BallTracker y anotadores del campo.
+sports @ git+https://github.com/roboflow/sports.git

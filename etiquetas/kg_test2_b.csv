@@ -1,0 +1,12 @@
+clip,t_s,n_pressers,confidence,note
+kg_test2,1.5,1,media,Defensor blanco encima del poseedor amarillo en el centro-izquierda que le disputa el balon; el balon sale hacia un companero
+kg_test2,6.5,1,baja,Extremo amarillo por la banda derecha con un blanco pegado a su lado; duelo corto y confuso
+kg_test2,9.0,1,media,Blanco en contacto con el poseedor amarillo de la banda derecha en el area; continua el duelo de banda
+kg_test2,10.5,1,media,Blanco en contacto con el poseedor amarillo de la banda derecha; entrada o disputa
+kg_test2,15.0,2,media,Poseedor amarillo junto a la linea de fondo derecha con dos blancos a menos de 3 m
+kg_test2,16.5,1,alta,Poseedor amarillo en la banda derecha con un blanco encima orientado hacia el balon
+kg_test2,17.5,2,media,Blanco(s) rodeando al poseedor amarillo entre varios amarillos en el centro-derecha en pases cortos
+kg_test2,21.5,2,baja,Poseedor amarillo en el centro con dos blancos cerca en pases cortos; presion sostenida difusa
+kg_test2,26.0,1,baja,Poseedor amarillo en el centro con un blanco pegado; el balon sale hacia la derecha
+kg_test2,,,,Fases: 0-2.5 amarillo conduce con un blanco encima; 2.5-5.5 extremo amarillo corre por la derecha con blancos persiguiendo sin cerrar; 5.5-11 duelos por la banda derecha; 11-13 circulacion sin presion; 13-16 balon cerca del fondo derecho con area congestionada; 16-19 amarillo con blanco encima; 19.5-25 amarillos en circulacion corta con un blanco cercano de forma intermitente
+kg_test2,,,,Tramos sin presion clara: 2.5-5.5; 11.0-13.0; 28.5-30 (cambio de orientacion con blancos lejos)

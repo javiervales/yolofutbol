@@ -1,0 +1,5 @@
+clip,t_s,n_pressers,confidence,note
+kg_test1,13.5,2,baja,Balon en el grupo junto al circulo central con rojos y oscuros a pocos metros; no se distingue al poseedor ni si se cierra de forma activa
+kg_test1,27.8,1,baja,Balon en la banda derecha cerca del area; un jugador cercano al poseedor (presion 1 en cabecera); plano muy lejano
+kg_test1,,,,"Fases: 0-9 s juego abierto sin balon claro y jugadores dispersos; 9-13 s posesion rojo/E0 con circulacion a media distancia; 13-17 s grupo central con contacto (un solo pico por presion sostenida); 17-25 s balon largo hacia la derecha con todos lejos (sin presion); 25-30 s posesion E1 en banda derecha con un defensor cerca solo hacia 27-28 s"
+kg_test1,,,,"Tramos sin presion: 0-9 s, 17-25 s, 28.5-30 s"

@@ -1,0 +1,10 @@
+{
+  "control_s": [0.3, 0.4, 0.6],
+  "dist_posesion_m": [2.0, 2.5],
+  "dist_presion_m": [4.0, 5.0, 6.0],
+  "smooth_window": [25],
+  "peak_prominence": [0.3, 0.5],
+  "peak_min_sep_s": [1.0],
+  "closing_min_mps": [0.0, 0.5, 1.0],
+  "dist_presion_core_m": [2.5]
+}

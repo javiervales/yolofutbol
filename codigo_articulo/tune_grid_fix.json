@@ -1,0 +1,6 @@
+{
+  "carry_max_s": [0.0, 2.0, 3.0, 5.0],
+  "closing_min_mps": [0.0, 0.5, 1.0, 2.0],
+  "dist_presion_core_m": [2.5, 3.5],
+  "dist_presion_m": [5.0, 6.0]
+}

@@ -1,0 +1,10 @@
+clip,t_s,n_pressers,confidence,note
+kg_test18,0.5,2,baja,Amarillo con balon en zona central; dos o tres blancos cerca en el corro inicial
+kg_test18,6.2,2,media,Poseedor amarillo en el centro-derecha rodeado por dos blancos que cierran
+kg_test18,20.6,1,baja,Amarillo conduce hacia la banda con un blanco a ~5 m
+kg_test18,22.1,1,media,Blanco encima del amarillo que conduce por el lado izquierdo tras el cruce; presion sostenida desde 21.1
+kg_test18,24.5,1,baja,Amarillo recibe en el lado izquierdo con un blanco pegado
+kg_test18,27.4,2,media,Amarillo con balon junto al area con dos blancos cerrando
+kg_test18,28.3,3,media,Aglomeracion en el area con tres blancos sobre el balon (no cuenta como mismo poseedor seguro)
+kg_test18,,,,"Fases: 0-3.5 s amarillo con balon en el centro con blancos cerca; 4-19.5 s amarillo con balon (cluster 5-8 s; 9-19 s circulacion en el lado derecho sin presion); 20-23 s ataque por la izquierda con duelos; 23-30 s amarillo en campo contrario con blancos replegados"
+kg_test18,,,,"Sin presion: 8.6-19.5 s (blancos retrasados, balon en el lado derecho a mas de 10 m de los rivales)"

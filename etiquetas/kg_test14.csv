@@ -1,0 +1,8 @@
+clip,t_s,n_pressers,confidence,note
+kg_test14,4.5,1,media,"Ataque amarillo en banda lejana junto al área local: un defensor blanco se pega al poseedor amarillo cerca de la línea de fondo (duelo 3.8-4.8 s), plano lejano"
+kg_test14,6.5,1,baja,"Tras el centro/pase corto, receptor amarillo en la frontal con un blanco encima en zona congestionada (6.2-6.7 s); distancia difícil de medir a esa profundidad"
+kg_test14,11.0,1,baja,"Conductor amarillo en banda cercana con un defensor blanco a ~3 m que lo acompaña y cierra antes de que suelte el pase (10.1-11.0 s); puede ser solo acompañamiento"
+kg_test14,19.0,1,media,"Defensor blanco sale al poseedor amarillo en el centro-derecha y llega al contacto (18.2-19.2 s); el amarillo sigue con el balón"
+kg_test14,21.0,1,media,"Duelo blanco-amarillo cerca del círculo central (20.6-22.6 s): blanco cierra al poseedor y la posesión queda disputada; mismo par de jugadores, un solo pico"
+kg_test14,,,,"Fases: posesión amarilla (Dortmund, E1) prácticamente todo el clip; 0-7 s ataque por banda lejana hacia el área local con duelos; 7-8.5 s cambio de orientación largo; 20.6-22.6 s posesión disputada con posible pérdida breve"
+kg_test14,,,,"Sin presión: 0-2.4 s (circulación lejos), 7.2-10 s (balón en vuelo y conducción libre), 11.5-18 s (pases y conducciones en banda cercana con rivales a >8 m), 23-30 s (circulación amarilla en campo propio y banda derecha sin rival encima)"

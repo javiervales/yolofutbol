@@ -1,0 +1,8 @@
+clip,t_s,n_pressers,confidence,note
+kg_test13,1.0,1,baja,Portero blanco con el balón en su área y un delantero azul pegado a ≤4 m que se mantiene cerca hasta ~3.8 s sin cierre claro
+kg_test13,7.7,1,media,Disputa con balón suelto en el círculo central derecho: un azul encima del blanco que controla (duelo 7.2-7.7 s)
+kg_test13,9.6,1,baja,Blanco con balón en banda derecha con azul a ~3-4 m cerrando tras pase largo
+kg_test13,10.1,2,media,Blanco con el balón en zona central derecha rodeado por dos azules a ≤4 m
+kg_test13,12.0,2,baja,Disputa con balón suelto central; azules a 2-4 m de dos blancos (continúa hasta ~12.5 s con un azul sobre el poseedor)
+kg_test13,,,,Fases: 0-4 s saque/juego del portero blanco con delantero azul cerca; 4-7 s circulación blanca sin presión; 7-13 s zona de disputas en el centro derecho con varias pérdidas y duelos; 13.4-22 s banda derecha blanca con poseedor libre sin rival a menos de 6 m (14.4 s acompañado a ~6 m sin cerrar)
+kg_test13,,,,22-30 s: posesión blanca en campo contrario sin presión; 23.0-24.5 s hay un azul a 3-5 m de un blanco pero el balón va en vuelo o lo tiene otro (sin pico); 29.8 s marcado como presión por el detector pero con balón en vuelo (no cuenta)

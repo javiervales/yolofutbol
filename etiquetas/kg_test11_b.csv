@@ -1,0 +1,14 @@
+clip,t_s,n_pressers,confidence,note
+kg_test11,4.8,1,baja,Poseedor oscuro con balón en banda izquierda y un rival blanco a pocos metros por el interior; no se ve con claridad que cierre.
+kg_test11,6.5,1,media,Poseedor oscuro pegado a la banda izquierda con un rival blanco encima (a ~2 m) en 6.2-6.7 s.
+kg_test11,7.7,2,baja,Grupo en la zona baja izquierda con dos rivales blancos rodeando al balón; posible disputa tras el control; resolución justa.
+kg_test11,10.5,1,baja,Poseedor oscuro por el centro-derecha con un rival blanco acercándose por detrás; la distancia es incierta.
+kg_test11,14.5,1,media,Poseedor oscuro en el círculo central derecho con un rival blanco cerrando desde el interior en 14.4-14.9 s.
+kg_test11,15.8,1,baja,Nuevo poseedor en la zona izquierda con un rival junto a él; parte tapada por la vista cenital; posible continuación del pico anterior.
+kg_test11,17.5,1,media,Poseedor oscuro con balón en el centro y rival blanco pegado al costado.
+kg_test11,21.0,1,baja,Poseedor oscuro por la derecha con un rival blanco cercano; no se aprecia con claridad que cierre.
+kg_test11,24.5,1,baja,Poseedor oscuro en la zona baja con un rival blanco a su altura; imagen pequeña y ambigua.
+kg_test11,26.4,1,media,Poseedor oscuro en el área rival izquierda con defensor blanco encima junto a la línea.
+kg_test11,28.5,1,media,Poseedor oscuro en la esquina izquierda con defensor blanco pegado; la presión se mantiene hasta 29.8 s (un solo pico).
+kg_test11,,,,Posesión: equipo oscuro (E0) durante casi todo el clip; 0-3 s circulación de ataque sin rival cerca; 5-8 s avance por la izquierda con rivales cerca; 8-14 s posesión oscura en el centro; 14-30 s posesión oscura con rivales entrando; hacia 22 s posible disputa o salida blanca no clara.
+kg_test11,,,,Tramos sin presión clara: 0-4.3 s; 8.2-10 s; 11-14 s; 18-20.5 s; 22-24 s. Resolución baja: las confianzas bajas son honestas y puede haber picos no detectados o falsos.
