@@ -509,10 +509,12 @@ def build_parser() -> argparse.ArgumentParser:
 
     t = sub.add_parser("tune", help="barrido de parámetros contra picos etiquetados a mano")
     t.add_argument("--runs", nargs="+", required=True, help="directorios de ejecuciones de run")
-    t.add_argument("--labels", required=True, help="CSV con columnas clip,t_s")
+    t.add_argument("--labels", required=True, help="CSV con columnas clip,t_s[,n_pressers]")
     t.add_argument("--grid", required=True, help="JSON parámetro -> lista de valores")
     t.add_argument("--out", required=True, help="directorio de salida")
     t.add_argument("--tol-s", type=float, default=1.5, help="tolerancia de emparejamiento (s)")
+    t.add_argument("--objective", choices=["f1", "spearman"], default="spearman",
+                   help="criterio para ordenar tune_results.csv y elegir best.json")
     t.add_argument("--chosen", default=None, help="JSON con formato best.json para marcar el valor elegido")
     t.add_argument("--ncols", type=int, default=3, help="columnas de la rejilla de sensitivity.png")
     t.set_defaults(func=tune.cmd_tune)
@@ -520,16 +522,18 @@ def build_parser() -> argparse.ArgumentParser:
     se = sub.add_parser("sensitivity", help="sensitivity.png desde tune_results.csv existentes")
     se.add_argument("--results", nargs="+", required=True, help="uno o varios tune_results.csv")
     se.add_argument("--out", required=True, help="directorio de salida")
+    se.add_argument("--metric", choices=["f1", "spearman"], default="f1", help="métrica del eje y")
     se.add_argument("--chosen", default=None, help="JSON con formato best.json para marcar el valor elegido")
     se.add_argument("--ncols", type=int, default=3, help="columnas de la rejilla de sensitivity.png")
     se.set_defaults(func=tune.cmd_sensitivity)
 
     e = sub.add_parser("evaluate", help="evalúa una combinación de parámetros contra los picos etiquetados")
     e.add_argument("--runs", nargs="+", required=True, help="directorios de ejecuciones de run")
-    e.add_argument("--labels", required=True, help="CSV con columnas clip,t_s")
+    e.add_argument("--labels", required=True, help="CSV con columnas clip,t_s[,n_pressers]")
     e.add_argument("--params", default=None, help="best.json de tune; si falta, los parámetros de cada ejecución")
     e.add_argument("--out", required=True, help="directorio de salida")
     e.add_argument("--tol-s", type=float, default=1.5, help="tolerancia de emparejamiento (s)")
+    e.add_argument("--names", default=None, help="JSON nombre_de_run -> rótulo para intensity.png")
     e.set_defaults(func=tune.cmd_evaluate)
 
     s = sub.add_parser("sheets", help="hojas de contacto PNG para etiquetar picos a ojo")

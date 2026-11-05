@@ -1,0 +1,9 @@
+clip,t_s,n_pressers,confidence,note
+kg_test2,1.5,1,media,"Conductor amarillo (E1) en mediocampo con un blanco pegado a su costado desde 1.0 s hasta el pase a 2.4 s; maxima proximidad hacia 1.4-1.9 s"
+kg_test2,5.5,1,media,"Segundo amarillo conduce por banda derecha y un blanco le cierra desde 4.3 s hasta ~3 m a 5.3 s, justo antes del pase atras"
+kg_test2,8.5,1,media,"Amarillo recibe a 7.2 s y conduce hacia el area con un blanco encima (~2 m) de forma sostenida de 7.7 a 10.6 s hasta el centro; un solo pico"
+kg_test2,14.0,2,media,"Juego corto amarillo en la zona del area rival (12.5-15.4 s) con dos blancos cerrando en varios instantes; zona densa, lectura dificil en miniatura"
+kg_test2,17.5,2,alta,"Blanco (E0) recupera a 16.3 s y recibe contrapresion inmediata: dos amarillos flanqueandole a 1-3 m en 17.3-18.2 s; pierde el balon a 19.7 s"
+kg_test2,23.0,1,media,"Amarillo conduce por derecha del centro (21.6-24.0 s) con un blanco pegado; maximo a 23.0 s; tras el pase corto a 24.5 s otro blanco se acerca al receptor (25.0-25.9 s), tomado como continuacion"
+kg_test2,,,,"Fases: 0.0-15.8 s posesion amarillo (E1) de mediocampo a area rival; 16.3-19.2 s posesion blanco (E0) tras recuperar; 19.7-28.3 s posesion amarillo hasta que el balon sale por la banda inferior; 28.3-29.8 s sin posesion, saque de banda pendiente"
+kg_test2,,,,"Sin presion: 2.9-4.3 s conduccion libre por banda derecha; 5.8-7.2 s balon en vuelo; 11.0-12.5 s centro en vuelo; 18.7 s pase en vuelo; 26.9-28.3 s balon en largo por banda, blanco persiguiendo balon suelto, no al poseedor"

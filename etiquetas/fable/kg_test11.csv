@@ -1,0 +1,10 @@
+clip,t_s,n_pressers,confidence,note
+kg_test11,6.5,2,media,"Receptor E0 en banda próxima, a unos 15-20 m de la portería izquierda; dos rivales encima (2-4 m) de 6.2 a 7.7 s, suelta corto y el balón sale de la zona a 8.2 s"
+kg_test11,17.5,2,media,"Secuencia 14.9-17.5 s: poseedor E0 con rival pegado desde 15 s, pared corta a 16.3 y al recibir de nuevo a 17.3 tiene dos rivales a 2-3 m; suelta largo a 17.8"
+kg_test11,21.5,1,baja,"Rival que acompañaba a ~8 m llega en sprint al poseedor en 21.1-21.6 s, que suelta corto; dudoso por resolución"
+kg_test11,24.5,1,media,"Poseedor en banda próxima con rival a 4-6 m desde 23.0 que cierra a 1-2 m en 24.5 s; pase largo a la izquierda en 25.0"
+kg_test11,28.5,1,media,"Balón llega junto al área izquierda (portero rojo a 4-5 m); poseedor con un rival encima a 1-2 m de 27.4 s hasta el final del clip"
+kg_test11,,,,"Posesión E0 (cajas azules) todo el clip según la cabecera; no veo cambio de posesión. 0-3.4 s control en zona central sin rival a menos de 7 m; 3.4-5.3 s pases a la banda izquierda, receptor a 4.8 s con rival a ~6 m que no cierra"
+kg_test11,,,,"8.2-14.4 s circulación hacia el centro: poseedores de 9.1 a 13.9 s con rival más cercano a 7-10 m; las marcas presion 1 de 10.1-10.6 s no las veo como presión real"
+kg_test11,,,,"18.7-21.1 s conducción lenta con rival a ~8 m que acompaña sin cerrar; 25.0-26.9 s balón en vuelo largo hacia la izquierda sin presión"
+kg_test11,,,,"Limitación: miniaturas de 640x360, no distingo equipaciones con certeza en las limpias; n_pressers y confianza se basan en proximidad relativa y en las cajas E0/E1 de las anotadas"

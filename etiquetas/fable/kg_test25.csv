@@ -1,0 +1,8 @@
+clip,t_s,n_pressers,confidence,note
+kg_test25,6.0,1,baja,"Tras el segundo balón del saque largo del portero E0 un jugador E1 parece controlar en zona izquierda con un rival a unos 4 m; el balón no se ve y podría ser marcaje sin cierre."
+kg_test25,17.0,2,media,"E1 recibe en el centro cerca de la banda lejana y dos rivales le cierran por ambos lados (uno a ~2 m en 17.3 s); suelta el balón hacia la banda cercana derecha en 17.5 s."
+kg_test25,22.5,1,alta,"El extremo E1 conduce por la banda cercana derecha y un defensa E0 le cierra progresivamente desde 20.6 s hasta el contacto en 22.1-22.6 s; sale jugando largo en 23.3 s."
+kg_test25,25.0,2,media,"Recepción disputada del balón largo en el lado lejano: el receptor E1 queda entre dos rivales (un tercero a ~6 m); podría ser duelo aéreo más que poseedor controlado."
+kg_test25,30.0,1,baja,"Al final del clip un E1 recibe en zona central lejana y un rival llega a ~3 m; el cierre empieza justo cuando termina el clip."
+kg_test25,,,,"Fases: 0-1.9 s portero E0 (derecha) saca largo; 2.4-5 s el balón cae en zona izquierda y se disputa el segundo balón; 5-17.5 s posesión E1 en circulación lenta por la banda lejana de izquierda a centro-derecha; 17.8-23.3 s cambio a la banda cercana derecha y conducción del extremo E1; 23.5-27.5 s balón largo al lado lejano que queda suelto hasta que E1 controla en 27.8 s; 27.8-30 s E1 sigue en posesión."
+kg_test25,,,,"Sin presión: 0-2.4 s (todos lejos del portero), 8-16 s (E1 pasa por la banda lejana con rivales a 5-7 m que acompañan sin cerrar), 18-20.2 s (el extremo E1 conduce solo), 26-29 s (balón suelto y control E1 sin rival cerca)."

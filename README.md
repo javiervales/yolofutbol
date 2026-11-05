@@ -184,12 +184,12 @@ bash analizar.sh data/0bfacc_0.mp4 salidas/dfl_0bfacc_0 --no-video
 python -m yolofutbol replay --from salidas/dfl_0bfacc_0 --out salidas/radio6/dfl_0bfacc_0 --dist-presion-m 6
 
 # tune: barrido de parámetros contra los picos etiquetados (escribe tune_results.csv, best.json y sensitivity.png)
-python -m yolofutbol tune --runs salidas/dfl_* --labels etiquetas/labels_dfl.csv \
-    --grid codigo_articulo/tune_grid_final.json --out salidas/tune_1
+python -m yolofutbol tune --runs salidas/dfl_* --labels etiquetas/fable/labels_A.csv \
+    --grid codigo_articulo/tune_grid_final.json --out salidas/tune_1 --objective spearman
 
-# evaluate: precisión, exhaustividad y F1 de una combinación frente a una referencia
-python -m yolofutbol evaluate --runs salidas/dfl_* --labels etiquetas/labels_consenso.csv \
-    --params salidas/tune_1/best.json --out salidas/eval_consenso
+# evaluate: presión media por clip frente a la intensidad marcada (ρ, r, intensity.png) y F1 de los máximos
+python -m yolofutbol evaluate --runs salidas/dfl_* --labels etiquetas/fable/labels_A.csv \
+    --params salidas/tune_1/best.json --out salidas/eval_fable --names codigo_articulo/nombres_clips.json
 
 # sheets: hojas de miniaturas cada 0,5 s para marcar picos a ojo
 python -m yolofutbol sheets --video data/0bfacc_0.mp4 --out salidas/hojas_0bfacc_0 --every-s 0.5 --cols 4 --rows 3
@@ -213,7 +213,7 @@ yolofutbol/               paquete de Python
   pressure.py             posesión, presionantes, curva y picos
   viz.py                  curva, vídeo anotado, vista cenital, figuras
   tune.py                 barrido y evaluación frente a etiquetas
-  labels.py               consenso y unión de las etiquetas de dos analistas
+  labels.py               fusión de las etiquetas de uno o dos analistas
   io.py                   lectura de vídeo y CSV
 notebooks/YOLOFUTBOL_Colab.ipynb   cuaderno para Google Colab
 instalar.sh               instalación en un entorno .venv

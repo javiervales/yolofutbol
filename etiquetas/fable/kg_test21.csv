@@ -1,0 +1,10 @@
+clip,t_s,n_pressers,confidence,note
+kg_test21,1.5,1,media,"Rojo (E1) controla junto a la banda cercana en campo verde; un verde le cierra a 2-3 m (otro a ~5 m), suelta el balón a 1.9 s"
+kg_test21,6.5,2,alta,"Presión sostenida 4.8-6.7 s sobre el poseedor rojo: 2-3 verdes encima; acaba en robo verde a 7.5 s"
+kg_test21,8.0,1,media,"Contrapresión tras la pérdida: rojo a ~2 m del verde que controla; otro rojo acompaña a 4-5 m hasta el despeje largo a 10 s"
+kg_test21,12.5,1,media,"Disputa del despeje largo cerca del medio: rojo controla con un verde pegado, lo suelta a 13 s"
+kg_test21,18.0,2,media,"Rojo recibe el balón largo junto al área verde con verdes a ambos lados a 2-3 m; remate/centro a 18.2 s"
+kg_test21,20.0,2,media,"Segundo balón en el área: rojo controla con 2 verdes cerrando; acaba en el portero verde a 22 s"
+kg_test21,29.5,1,baja,"Verde controla en campo propio con un rojo acercándose a 3-4 m; el clip termina sin ver el desenlace"
+kg_test21,,,,"Fases: 0-7.5 s posesión roja (E1) por la banda cercana en campo verde; 7.5-10 s posesión verde (E0) tras robo y despeje largo; 12-21.5 s posesión roja tras ganar el despeje, balón largo al área y remates; 22-30 s posesión verde saliendo desde el portero (de blanco) sin oposición"
+kg_test21,,,,"Sin presión: 2-4.5 s (pases rojos con rivales lejos), 10-11.5 s (despeje en vuelo), 13.5-17 s (balón largo en vuelo), 22-29 s (salida verde con rojos replegados a más de 10 m); a 21.1 s la posesión marcada abajo a la derecha parece error de detección"

@@ -356,9 +356,12 @@ CHOSEN_HEX = "#DE1E25"
 BAND_GREY = "#d9d8d3"
 
 
+METRIC_LABELS = {"f1": "F1 total", "spearman": "ρ de Spearman"}
+
+
 def plot_sensitivity(results: pd.DataFrame, params: list, path: Path, chosen: Optional[dict] = None,
-                     ncols: int = 3) -> None:
-    """Rejilla de paneles, uno por parámetro: F1 total máximo (línea con puntos) y rango p25-p75 (banda gris)."""
+                     ncols: int = 3, metric: str = "f1") -> None:
+    """Rejilla de paneles, uno por parámetro: máximo de la métrica (línea con puntos) y rango p25-p75 (banda gris)."""
     n = max(1, len(params))
     ncols = max(1, min(ncols, n))
     nrows = math.ceil(n / ncols)
@@ -369,7 +372,7 @@ def plot_sensitivity(results: pd.DataFrame, params: list, path: Path, chosen: Op
     for ax in flat[n:]:
         ax.set_visible(False)
     for ax, p in zip(flat, params):
-        g = results.dropna(subset=[p, "f1"]).groupby(p)["f1"]
+        g = results.dropna(subset=[p, metric]).groupby(p)[metric]
         keys = sorted(g.groups)
         x = np.array(keys, dtype=float)
         best = g.max().loc[keys].to_numpy(dtype=float)
@@ -383,7 +386,7 @@ def plot_sensitivity(results: pd.DataFrame, params: list, path: Path, chosen: Op
             ax.scatter([cx], [np.interp(cx, x, best)], marker="v", s=70, color=CHOSEN_HEX, zorder=4,
                        label="elegido")
         ax.set_title(PARAM_LABELS.get(p, p), color=TEXT, fontsize=9, loc="left")
-        ax.set_ylim(0.3, 0.9)
+        ax.set_ylim(*((0.3, 0.9) if metric == "f1" else (-0.2, 1.0)))
         ax.grid(axis="y", color="#e6e5e0", linewidth=0.8)
         for side in ("top", "right"):
             ax.spines[side].set_visible(False)
@@ -392,7 +395,7 @@ def plot_sensitivity(results: pd.DataFrame, params: list, path: Path, chosen: Op
         ax.tick_params(colors=TEXT_2, labelsize=8)
         _comma_axes(ax)
     for r in range(nrows):
-        axes[r, 0].set_ylabel("F1 total", color=TEXT_2, fontsize=8)
+        axes[r, 0].set_ylabel(METRIC_LABELS.get(metric, metric), color=TEXT_2, fontsize=8)
     handles = {}
     for ax in flat[:n]:
         for h, lab in zip(*ax.get_legend_handles_labels()):
@@ -487,3 +490,66 @@ def plot_storyboard(frames: pd.DataFrame, peaks: pd.DataFrame, window: int, imag
                      bbox={"boxstyle": "square,pad=0.25", "facecolor": "white", "edgecolor": "none"})
         fig.savefig(path, dpi=300, facecolor="white")
         plt.close(fig)
+
+
+def _short_clip(name: str, names: Optional[dict] = None) -> str:
+    """Rótulo del clip: el del mapa si existe; kg_test* tal cual; si no, sin prefijo dfl_ o kg_."""
+    if names and name in names:
+        return str(names[name])
+    if name.startswith("kg_test"):
+        return name
+    for prefix in ("dfl_", "kg_"):
+        if name.startswith(prefix):
+            return name[len(prefix):]
+    return name
+
+
+POINT_OFFSETS = [((4, 3), "left", "bottom"), ((4, -3), "left", "top"), ((-4, 3), "right", "bottom")]
+STACK_STEP_PT = 9
+CLOSE_FRAC_X = 0.04
+CLOSE_FRAC_Y = 0.03
+
+
+def _label_points(ax, x: np.ndarray, y: np.ndarray, texts: list) -> None:
+    """Rótulos a 8 pt con desplazamiento alterno; los de puntos casi coincidentes se apilan en vertical."""
+    rx = (x.max() - x.min()) or 1.0
+    ry = (y.max() - y.min()) or 1.0
+    placed = []
+    for k, (xi, yi, txt) in enumerate(zip(x, y, texts)):
+        close = [j for j in placed if abs(x[j] - xi) < CLOSE_FRAC_X * rx and abs(y[j] - yi) < CLOSE_FRAC_Y * ry]
+        if close:
+            (dx, dy), ha, va = POINT_OFFSETS[0]
+            dy = dy + STACK_STEP_PT * len(close)
+        else:
+            (dx, dy), ha, va = POINT_OFFSETS[k % len(POINT_OFFSETS)]
+        ax.annotate(txt, (xi, yi), xytext=(dx, dy), textcoords="offset points", ha=ha, va=va,
+                    fontsize=8, color=TEXT_2)
+        placed.append(k)
+
+
+def plot_intensity(df: pd.DataFrame, rho: float, r: float, path: Path, names: Optional[dict] = None) -> None:
+    """Dispersión intensidad del sistema frente a la marcada por el analista, con recta de ajuste, ρ y r."""
+    d = df.dropna(subset=["intensidad_sistema", "intensidad_referencia"])
+    fig, ax = plt.subplots(figsize=(4.2, 3.5), facecolor=SURFACE)
+    ax.set_facecolor(SURFACE)
+    x, y = d["intensidad_sistema"].to_numpy(float), d["intensidad_referencia"].to_numpy(float)
+    ax.scatter(x, y, s=28, color=HEX[0], edgecolors=SURFACE, linewidths=1, zorder=3)
+    if len(x):
+        _label_points(ax, x, y, [_short_clip(str(c), names) for c in d["clip"]])
+    if len(x) >= 2 and np.std(x) > 0:
+        a, b = np.polyfit(x, y, 1)
+        xs = np.linspace(x.min(), x.max(), 50)
+        ax.plot(xs, a * xs + b, color=TEXT_2, linewidth=1, linestyle="--", zorder=2)
+    txt = f"ρ = {_num(round(rho, 2))}\nr = {_num(round(r, 2))}\nn = {len(x)}" if np.isfinite(rho) else f"n = {len(x)}"
+    ax.text(0.03, 0.97, txt, transform=ax.transAxes, ha="left", va="top", fontsize=9, color=TEXT, zorder=5,
+            bbox={"boxstyle": "square,pad=0.35", "facecolor": "white", "alpha": 0.8, "edgecolor": "none"})
+    ax.set_xlabel("presión media del sistema (rivales presionando)", color=TEXT_2, fontsize=9)
+    ax.set_ylabel("intensidad marcada por el analista\n(presionantes por minuto)", color=TEXT_2, fontsize=9)
+    ax.grid(color="#e6e5e0", linewidth=0.6)
+    for side in ("top", "right"):
+        ax.spines[side].set_visible(False)
+    ax.tick_params(colors=TEXT_2, labelsize=9)
+    _comma_axes(ax)
+    fig.tight_layout()
+    fig.savefig(path, dpi=300, facecolor=SURFACE)
+    plt.close(fig)

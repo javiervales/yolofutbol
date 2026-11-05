@@ -1,0 +1,7 @@
+clip,t_s,n_pressers,confidence,note
+kg_test16,4.5,2,media,"E0 conduce junto a la banda lejana (centro-izquierda) con un E1 pegado desde 1.5 s; un segundo E1 cierra en 4.3 s justo antes del pase largo a la banda izquierda"
+kg_test16,13.0,1,media,"E0 recibe en la banda lejana cerca de la esquina del area (~20 m de la linea de fondo) con un E1 encima; presion que se mantiene con pases cortos hasta ~15.8 s"
+kg_test16,17.0,2,media,"Pase interior al area: el receptor E0 queda rodeado por dos E1 (cluster en la cenital) y devuelve rapido a la banda"
+kg_test16,20.0,1,media,"Tras el centro/pase de 18.7 s un E0 controla en la zona del punto de penalti con un E1 cerrando; sigue remate o centro y el balon sale por la linea de fondo (~21-22 s)"
+kg_test16,,,,"Fases: 0-4.8 s E0 posesion en banda lejana centro-izquierda (presion creciente); 5.3-8.2 s E0 en banda izquierda sin presion (E1 acompana a 7-8 m sin cerrar, no cuenta); 8.6-11.5 s E0 conduce por la banda lejana hacia la derecha con E1 a 4-6 m (no cuenta, engine marca 0, tracker pierde el balon); 12-20.2 s E0 ataca por la derecha hasta el area; 20.6-29.8 s balon fuera (parado en la esquina del area pequena, parece saque de puerta E1), sin presion"
+kg_test16,,,,"Tramos sin presion: 0-1.4 s (balon suelto/llegando), 5.3-8.2 s, 14.4-15.4 s (relajacion con el mismo poseedor, no se separa pico), 17.3-18.2 s (poseedor en banda sin rival a 5 m), 20.6-29.8 s. Miniaturas pequenas y jugada en la banda lejana: todas las confianzas son medias; n_pressers estimado con la cenital"

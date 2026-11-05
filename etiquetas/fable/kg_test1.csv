@@ -1,0 +1,9 @@
+clip,t_s,n_pressers,confidence,note
+kg_test1,9.0,1,media,"Poseedor E0 (rojo) en banda lejana izquierda; un E1 que le acompañaba a 4-6 m desde ~6.7 s cierra a ~3 m justo antes del pase (en vuelo a 9.6 s)."
+kg_test1,13.5,1,baja,"Balón en aglomeración de ambos equipos en zona lejana centro-izquierda (10-17 s, tracker en lost); a 13.4 s el balón aparece pegado a dos jugadores, un rival a ~3 m del que lo controla; disputa, equipo poseedor no distinguible a este tamaño."
+kg_test1,27.5,1,media,"Jugador recibe a 27.4 s (zona central derecha, cabecera E1 controlado pero caja de color E0: equipo dudoso); un rival encima y el balón sale rápido a 27.8 s (tracker marca presion 1); verificación visual débil."
+kg_test1,,,,"0-9.6 s: posesión E0 (rojo) en banda lejana izquierda, conducción con un E1 acompañando; termina en pase a 9.6 s."
+kg_test1,,,,"10-17.5 s: balón entre 6-8 jugadores mezclados en zona lejana centro-izquierda, tracker lo pierde casi todo el tramo; disputa de segundo balón."
+kg_test1,,,,"18-21.5 s: balón largo hacia la derecha con todos lejos; lo recibe el portero E1 (amarillo, etiquetado como arb) a 21.6 s; sin presión."
+kg_test1,,,,"21.6-27.4 s: posesión E1 controlada, portero -> #51 (25.4 s) -> compañero (27.4 s); rojos lejos; sin presión salvo el pico de 27.5 s."
+kg_test1,,,,"28.3-29.8 s: pase atrás y balón al portero E1 a 29.8 s sin delantero rojo cerca; sin presión."
